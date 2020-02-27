@@ -82,7 +82,6 @@ python main.py --ae --train --phase 0 --iteration 8000000 --sample_dir samples/a
 python main.py --ae --train --phase 1 --iteration 8000000 --sample_dir samples/all_vox256_img1 --sample_vox_size 64
 ```
 The above commands will train the AE model 8000000 iterations on 16<sup>3</sup>, 32<sup>3</sup>, 64<sup>3</sup> resolution each, for phase 0 (continuous phase); and 8000000 iterations on 64<sup>3</sup> resolution, for phase 1 (discrete phase).
-Training on the 13 categories takes about 6 days on one GeForce RTX 2080 Ti GPU.
 
 After training on each resolution, you may visualize some results from the testing set.
 ```
@@ -103,6 +102,7 @@ Then use the following commands to train the SVR model and get some samples:
 python main.py --svr --train --epoch 1000 --sample_dir samples/all_vox256_img2
 python main.py --svr --sample_dir samples/all_vox256_img2 --start 0 --end 16
 ```
+Training an AE model then SVR model on the 13 categories takes about 6 days on one GeForce RTX 2080 Ti GPU.
 
 ### Training options
 

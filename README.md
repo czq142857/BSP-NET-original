@@ -1,5 +1,5 @@
 # BSP-NET-original
-TensorFlow 1.15 implementation of "BSP-Net: Generating Compact Meshes via Binary Space Partitioning", [Zhiqin Chen](https://www.sfu.ca/~zhiqinc/), [Andrea Tagliasacchi](https://gfx.uvic.ca/people/ataiya/), [Hao (Richard) Zhang](https://www.cs.sfu.ca/~haoz/), along with other scripts used in our paper.
+TensorFlow 1.15 implementation of [BSP-Net: Generating Compact Meshes via Binary Space Partitioning](https://arxiv.org/abs/1911.06971), [Zhiqin Chen](https://www.sfu.ca/~zhiqinc/), [Andrea Tagliasacchi](https://gfx.uvic.ca/people/ataiya/), [Hao (Richard) Zhang](https://www.cs.sfu.ca/~haoz/), along with other scripts used in our paper.
 
 <img src='img/teaser.png' />
 
@@ -13,12 +13,9 @@ TensorFlow 1.15 implementation of "BSP-Net: Generating Compact Meshes via Binary
 The difference between the original and the others are:
 
 - The original contains other scripts based on TensorFlow 1.15, such as the toy experiment on 2D shapes, and the code for evaluations.
-- The other implementations are more readable, and the batch sizes are larger. The results are close or better than the original implementation.
+- The other implementations are more readable, and the batch sizes are different. The results are close or better than the original implementation.
 
 ## Citation
-[BSP-Net: Generating Compact Meshes via Binary Space Partitioning](https://arxiv.org/abs/1911.06971)
-[Zhiqin Chen](https://www.sfu.ca/~zhiqinc/), [Andrea Tagliasacchi](https://gfx.uvic.ca/people/ataiya/), [Hao (Richard) Zhang](https://www.cs.sfu.ca/~haoz/)
-
 If you find our work useful in your research, please consider citing:
 
 	@article{chen2020bspnet,
@@ -37,9 +34,7 @@ Requirements:
 
 
 ## Datasets and pre-trained weights
-The original voxel models are from [HSP](https://github.com/chaene/hsp).
-
-The rendered views are from [3D-R2N2](https://github.com/chrischoy/3D-R2N2).
+The original voxel models are from [HSP](https://github.com/chaene/hsp). The rendered views are from [3D-R2N2](https://github.com/chrischoy/3D-R2N2).
 
 Since our network takes point-value pairs, the voxel models require further sampling.
 
@@ -74,7 +69,7 @@ python setup.py build_ext --inplace
 ```
 The *bspt* module is for recovering meshes from BSP-trees.
 If you fail to build the module, you can replace *"from bspt import ..."* with *"from bspt_slow import ..."* in all codes.
-*bspt_slow.py* is written in python but slower than the Cython implementation.
+*bspt_slow.py* is written in python and slower than the Cython implementation.
 
 
 Please use the provided scripts *train_ae.sh*, *train_svr.sh*, *test_ae.sh*, *test_svr.sh* to train the network on the training set and get output meshes for the testing set.
@@ -86,7 +81,7 @@ python main.py --ae --train --phase 0 --iteration 8000000 --sample_dir samples/a
 python main.py --ae --train --phase 0 --iteration 8000000 --sample_dir samples/all_vox256_img0_64 --sample_vox_size 64
 python main.py --ae --train --phase 1 --iteration 8000000 --sample_dir samples/all_vox256_img1 --sample_vox_size 64
 ```
-The above commands will train the AE model 8000000 iterations on 16<sup>3</sup>, 32<sup>3</sup>, 64<sup>3</sup> resolution each, for phase 1 (continuous phase); and 8000000 iterations on 64<sup>3</sup> resolution, for phase 2 (discrete phase).
+The above commands will train the AE model 8000000 iterations on 16<sup>3</sup>, 32<sup>3</sup>, 64<sup>3</sup> resolution each, for phase 0 (continuous phase); and 8000000 iterations on 64<sup>3</sup> resolution, for phase 1 (discrete phase).
 Training on the 13 categories takes about 6 days on one GeForce RTX 2080 Ti GPU.
 
 After training on each resolution, you may visualize some results from the testing set.
@@ -116,7 +111,8 @@ You can use *--phase N* to specify which phase the network will be trained on.
 - phase 1 : hard discretization for BSP
 - phase 2 : hard discretization for BSP with L<sub>overlap</sub>
 - phase 3 : soft discretization for BSP (gradually push the continuous weights towards binary via a loss term). This phase produces better results for shape reconstruction.
-You can train the network on *phase 0 -> phase 1* or *phase 0 -> phase 2* or *phase 0 -> phase 3*.
+
+You can train the network on *phase 0 → phase 1* or *phase 0 → phase 2* or *phase 0 → phase 3*.
 
 
 ### Testing options
@@ -132,7 +128,7 @@ The default output mesh is not watertight - adjacent polygons do not share their
 Function *get_mesh_watertight* will merge nearby vertices for each convex to make all convexes watertight.
 
 
-You can also remove convexes that are inside the shape. Removing those "inside" convexes has very little impact on the visual appearance of the shapes (because those "inside" convexs are not visible), which is reflected by Light Field Distance (*2939.15 -> 2937.16*). But removing them has a huge impact on Chamfer Distance (*0.001432 -> 0.001548*).
+You can also remove convexes that are inside the shape. Removing those "inside" convexes has very little impact on the visual appearance of the shapes (because those "inside" convexs are not visible), which is reflected by Light Field Distance (*2939.15 → 2937.16*). But removing them has a huge impact on Chamfer Distance (*0.001432 → 0.001548*).
 In function *test_mesh_point* those "inside" convexes are kept; in other testing functions they are removed. Check the code for implementation details.
 
 
@@ -143,7 +139,9 @@ Please find the code in [bsp_2d](https://github.com/czq142857/BSP-NET-original/t
 ## Evaluation
 
 Our code for computing Chamfer Distance and Normal Consistency can be found at [evaluation](https://github.com/czq142857/BSP-NET-original/tree/master/evaluation).
+
 The Light Field Distance (LFD) is produced by [LightField descriptor](https://github.com/Sunwinds/ShapeDescriptor/tree/master/LightField/3DRetrieval_v1.8/3DRetrieval_v1.8).
+
 Note that [the code for LightField descriptor](https://github.com/Sunwinds/ShapeDescriptor/tree/master/LightField/3DRetrieval_v1.8/3DRetrieval_v1.8) is written in C and the executable only does closest shape retrieval according to the Light Field Distance. If you want to use it in your own experiments, you might need to change some lines to get the actual distance and recompile the code.
 
 

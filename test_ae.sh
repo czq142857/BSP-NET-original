@@ -1,0 +1,1 @@
+python main.py --ae --phase 1 --sample_dir samples/bsp_ae_out --start 0 --end 9000

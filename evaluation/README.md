@@ -1,4 +1,17 @@
-# evaluation
+# Evaluation
+
+### Pointcloud data
+
+For evaluation, we provide pointcloud files with normals for the shapes in ShapeNet. The points are sampled from only the surface of the shapes. We use floodfilled 256<sup>3</sup> voxel files in [HSP](https://github.com/chaene/hsp) to determine whether a point is inside a shape or on its surface.
+
+- [pointcloud_surface](https://drive.google.com/open?id=16yiTtOrf6m4q9h3ZfhsG07JcAhLvZ0yk)
+
+Backup links:
+
+- [pointcloud_surface](https://pan.baidu.com/s/1gRylOMEj26U0lZ8CgbQ8Lg) (pwd: ayta)
+
+
+### Usage
 
 *all_vox256_img_test.txt* is a list of names of the shapes in the testing set.
 

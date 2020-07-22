@@ -299,7 +299,7 @@ def get_mesh_watertight(bsp_convex_list):
                 if abs(vg[i][0]-vg[j][0])+abs(vg[i][1]-vg[j][1])+abs(vg[i][2]-vg[j][2])<merge_threshold:
                     same_flag = j
                     break
-            if same_flag>0:
+            if same_flag>=0:
                 mapping[i] = mapping[same_flag]
             else:
                 mapping[i] = counter

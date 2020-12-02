@@ -367,6 +367,8 @@ def get_mesh_watertight(bsp_convex_list):
                 if nowv!=prev:
                     tmpf.append(nowv+biass)
                     prev = nowv
+            if tmpf[0]==tmpf[-1]:
+                tmpf = tmpf[:-1]
             if len(tmpf)>=3:
                 polygons.append(tmpf)
     

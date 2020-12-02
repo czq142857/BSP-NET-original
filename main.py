@@ -1,6 +1,4 @@
 import os
-os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
-os.environ["CUDA_VISIBLE_DEVICES"]="0"
 import numpy as np
 
 from modelAE import BSP_AE
@@ -10,12 +8,13 @@ import tensorflow as tf
 import h5py
 
 flags = tf.app.flags
-flags.DEFINE_integer("phase", 1, "phase 0 = continuous, phase 1 = hard discrete, phase 2 = hard discrete with L_overlap, phase 3 = soft discrete [1]")
+flags.DEFINE_integer("phase", 1, "phase 0 = continuous, phase 1 = hard discrete, phase 2 = hard discrete with L_overlap, phase 3 = soft discrete, phase 4 = soft discrete with L_overlap [1]")
 #phase 0 continuous for better convergence
 #phase 1 hard discrete for bsp
 #phase 2 hard discrete for bsp with L_overlap
 #phase 3 soft discrete for bsp
-#use [phase 0 -> phase 1] or [phase 0 -> phase 2] or [phase 0 -> phase 3]
+#phase 4 soft discrete for bsp with L_overlap
+#use [phase 0 -> phase 1] or [phase 0 -> phase 2] or [phase 0 -> phase 3] or [phase 0 -> phase 4]
 flags.DEFINE_integer("epoch", 0, "Epoch to train [0]")
 flags.DEFINE_integer("iteration", 0, "Iteration to train. Either epoch or iteration need to be zero [0]")
 flags.DEFINE_float("learning_rate", 0.0001, "Learning rate for adam [0.00002]")
@@ -31,7 +30,13 @@ flags.DEFINE_integer("end", 16, "In testing, output shapes [start:end]")
 flags.DEFINE_boolean("ae", False, "True for ae [False]")
 flags.DEFINE_boolean("svr", False, "True for svr [False]")
 flags.DEFINE_boolean("getz", False, "True for getting latent codes [False]")
+flags.DEFINE_integer("gpu", 0, "Which GPU to use [0]")
 FLAGS = flags.FLAGS
+
+
+os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"]=str(FLAGS.gpu)
+
 
 def main(_):
 	if not os.path.exists(FLAGS.sample_dir):

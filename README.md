@@ -55,11 +55,11 @@ Backup links:
 
 We also provide the pre-trained network weights.
 
-- [BSP-NET-original.zip](https://drive.google.com/open?id=1Bw7h9hWdqbh7_RtZNTjIjKIQD01vsYm4)
+- [BSP-NET-original.zip](https://drive.google.com/file/d/1d5kablAtbp9ybRv9pNQEeKGrF8TROoUs/view?usp=sharing)
 
 Backup links:
 
-- [BSP-NET-original.zip](https://pan.baidu.com/s/11zUpN6G5vA4vO75bcPoJ0Q) (pwd: 50ee)
+- [BSP-NET-original.zip](https://pan.baidu.com/s/1JkcO18zSC-Y0MO1JIAOXuQ) (pwd: 1234)
 
 
 
@@ -110,11 +110,12 @@ Training an AE model then SVR model on the 13 categories takes about 6 days on o
 
 You can use *--phase N* to specify which phase the network will be trained on.
 - phase 0 : continuous for better convergence
-- phase 1 : hard discretization for BSP
-- phase 2 : hard discretization for BSP with L<sub>overlap</sub>
+- phase 1 : hard discretization for BSP.
+- phase 2 : hard discretization for BSP with L<sub>overlap</sub>.
 - phase 3 : soft discretization for BSP (gradually push the continuous weights towards binary via a loss term). This phase produces better results for shape reconstruction.
+- phase 4 : soft discretization for BSP with L<sub>overlap</sub>.
 
-You can train the network on *phase 0 → phase 1* or *phase 0 → phase 2* or *phase 0 → phase 3*.
+You can train the network on *phase 0 → phase 1* or *phase 0 → phase 2* or *phase 0 → phase 3* or *phase 0 → phase 4*.
 
 
 ### Testing options
@@ -126,11 +127,7 @@ You can use different testing functions provided in *main.py*:
 - *bsp_ae.test_mesh_obj_material(FLAGS)* : output meshes as obj format with a shared material file; you can visualize part correspondences by changing the colors in that material file
 
 
-The default output mesh is not watertight - adjacent polygons do not share their vertices and edges. You can enable watertight outputs by replacing function *get_mesh* with *get_mesh_watertight* in the testing functions.
-Function *get_mesh_watertight* will merge nearby vertices for each convex to make all convexes watertight.
-
-
-You can also remove convexes that are inside the shape. Removing those "inside" convexes has very little impact on the visual appearance of the shapes (because those "inside" convexs are not visible), which is reflected by Light Field Distance (*2939.15 → 2937.16*). But removing them has a huge impact on Chamfer Distance (*0.001432 → 0.001548*).
+There is an optional post-processing step to remove convexes that are inside the shape. Removing those "inside" convexes has very little impact on the visual appearance of the shapes (because those "inside" convexs are not visible), which is reflected by Light Field Distance (*2939.15 → 2938.31*). The impact on Chamfer Distance is more significant (*0.001432 → 0.001455*).
 In function *test_mesh_point* those "inside" convexes are kept; in other testing functions they are removed. Check the code for implementation details.
 
 

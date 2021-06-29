@@ -1,5 +1,5 @@
 # BSP-FC-QS-deeper-2048q
-TensorFlow 1.15 implementation of BSP-FC-QS-deeper-2048q model in our TPAMI paper [Learning Mesh Representations via Binary Space Partitioning Tree Networks](https://www.sfu.ca/~zhiqinc/bspnet/TPAMI_BSPNET.pdf), [Zhiqin Chen](https://www.sfu.ca/~zhiqinc/), [Andrea Tagliasacchi](https://gfx.uvic.ca/people/ataiya/), [Hao (Richard) Zhang](https://www.cs.sfu.ca/~haoz/).
+TensorFlow 1.15 implementation of BSP-FC-QS-deeper-2048q model in our TPAMI paper [Learning Mesh Representations via Binary Space Partitioning Tree Networks](https://arxiv.org/abs/2106.14274), [Zhiqin Chen](https://www.sfu.ca/~zhiqinc/), [Andrea Tagliasacchi](https://gfx.uvic.ca/people/ataiya/), [Hao (Richard) Zhang](https://www.cs.sfu.ca/~haoz/).
 
 
 ## Citation
